@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kana Learning</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <button type="button" class="menu-button open-menu-button" id="open-menu-button" aria-label="Open Menu Button">
+    <svg width="16px" height="16px">
+      <path fill="white"
+        d="M 0 2.398438 L 0 4 L 16 4 L 16 2.398438 Z M 0 7.199219 L 0 8.800781 L 16 8.800781 L 16 7.199219 Z M 0 12 L 0 13.601562 L 16 13.601562 L 16 12 Z M 0 12" />
+    </svg>
+  </button>
+  <div id="menu" hidden>
+    <header class="menu-header">
+      <button type="button" class="menu-button" id="menu-close-button" aria-label="Close Menu Button">
+        <svg width="16px" height="16px">
+          <path fill="white"
+            d="M 3.734375 2.132812 C 3.597656 2.132812 3.460938 2.183594 3.355469 2.289062 L 2.289062 3.355469 C 2.082031 3.566406 2.082031 3.902344 2.289062 4.109375 L 6.179688 8 L 2.289062 11.890625 C 2.082031 12.097656 2.082031 12.4375 2.289062 12.644531 L 3.355469 13.710938 C 3.566406 13.917969 3.902344 13.917969 4.109375 13.710938 L 8 9.820312 L 11.890625 13.710938 C 12.097656 13.917969 12.4375 13.917969 12.644531 13.710938 L 13.710938 12.644531 C 13.917969 12.433594 13.917969 12.097656 13.710938 11.890625 L 9.820312 8 L 13.710938 4.109375 C 13.917969 3.902344 13.917969 3.5625 13.710938 3.355469 L 12.644531 2.289062 C 12.433594 2.082031 12.097656 2.082031 11.890625 2.289062 L 8 6.179688 L 4.109375 2.289062 C 4.007812 2.183594 3.871094 2.132812 3.734375 2.132812 Z M 3.734375 2.132812" />
+        </svg>
+      </button>
+      <h1 class="menu-title">Settings ⚙️</h1>
+    </header>
+    <div class="menu-content">
+      <section class="menu-section">
+        <span>Game Mode</span>
+        <input type="radio" name="kana-type" id="type-hiragana">
+        <label for="type-hiragana">ひらがな<span>H i r a g a n a</span></label>
+        <input type="radio" name="kana-type" id="type-katakana">
+        <label for="type-katakana">カタカナ<span>K a t a k a n a</span></label>
+      </section>
+      <div class="menu-separator"></div>
+      <section class="menu-section">
+        <span>Selected Kana</span>
+        <input type="checkbox" name="hiragana" id="hiragana-a">
+        <label for="hiragana-a">あいうえお</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ka">
+        <label for="hiragana-ka">かきくけこ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-sa">
+        <label for="hiragana-sa">さしすせそ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ta">
+        <label for="hiragana-ta">たちつてと</label>
+        <input type="checkbox" name="hiragana" id="hiragana-na">
+        <label for="hiragana-na">なにぬねの</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ha">
+        <label for="hiragana-ha">はひふへほ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ma">
+        <label for="hiragana-ma">まみむめも</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ya">
+        <label for="hiragana-ya">やゆよ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ra">
+        <label for="hiragana-ra">らりるれろ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-wa">
+        <label for="hiragana-wa">わをん</label>
+        <br id="sep-h">
+        <input type="checkbox" name="hiragana" id="hiragana-ga">
+        <label for="hiragana-ga">がぎぐげご</label>
+        <input type="checkbox" name="hiragana" id="hiragana-za">
+        <label for="hiragana-za">ざじずぜぞ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-da">
+        <label for="hiragana-da">だぢづでど</label>
+        <input type="checkbox" name="hiragana" id="hiragana-ba">
+        <label for="hiragana-ba">ばびぶべぼ</label>
+        <input type="checkbox" name="hiragana" id="hiragana-pa">
+        <label for="hiragana-pa">ぱぴぷぺぽ</label>
+        <input type="checkbox" name="katakana" id="katakana-a">
+        <label for="katakana-a">アイウエオ</label>
+        <input type="checkbox" name="katakana" id="katakana-ka">
+        <label for="katakana-ka">カキクケコ</label>
+        <input type="checkbox" name="katakana" id="katakana-sa">
+        <label for="katakana-sa">サシスセソ</label>
+        <input type="checkbox" name="katakana" id="katakana-ta">
+        <label for="katakana-ta">タチツテト</label>
+        <input type="checkbox" name="katakana" id="katakana-na">
+        <label for="katakana-na">ナニヌネノ</label>
+        <input type="checkbox" name="katakana" id="katakana-ha">
+        <label for="katakana-ha">ハヒフヘホ</label>
+        <input type="checkbox" name="katakana" id="katakana-ma">
+        <label for="katakana-ma">マミムメモ</label>
+        <input type="checkbox" name="katakana" id="katakana-ya">
+        <label for="katakana-ya">ヤユヨ</label>
+        <input type="checkbox" name="katakana" id="katakana-ra">
+        <label for="katakana-ra">ラリルレロ</label>
+        <input type="checkbox" name="katakana" id="katakana-wa">
+        <label for="katakana-wa">ワヲン</label>
+        <br id="sep-k">
+        <input type="checkbox" name="katakana" id="katakana-ga">
+        <label for="katakana-ga">ガギグゲゴ</label>
+        <input type="checkbox" name="katakana" id="katakana-za">
+        <label for="katakana-za">ザジズゼゾ</label>
+        <input type="checkbox" name="katakana" id="katakana-da">
+        <label for="katakana-da">ダヂヅデド</label>
+        <input type="checkbox" name="katakana" id="katakana-ba">
+        <label for="katakana-ba">バビブベボ</label>
+        <input type="checkbox" name="katakana" id="katakana-pa">
+        <label for="katakana-pa">パピプペポ</label>
+      </section>
+    </div>
+  </div>
+  <div id="display">
+    <div class="card">
+      <p></p>
+      <span class="kana" id="prev2"></span>
+    </div>
+    <div class="card">
+      <p></p>
+      <span class="kana" id="prev"></span>
+    </div>
+    <div class="card">
+      <p></p>
+      <span class="kana" id="curr"></span>
+    </div>
+    <div class="card">
+      <p></p>
+      <span class="kana" id="next"></span>
+    </div>
+    <div class="card">
+      <p></p>
+      <span class="kana" id="next2"></span>
+    </div>
+  </div>
+  <section id="stats">
+    <div>
+      <div class="stat">
+        <span id="combo">0</span>
+        Combo
+      </div>
+      <div class="stat">
+        <span id="seen">0</span>
+        Seen
+      </div>
+    </div>
+    <div>
+      <div class="stat">
+        <span id="maxCombo">0</span>
+        Max. Combo
+      </div>
+      <div class="stat">
+        <span id="correct">0</span>
+        Correct
+      </div>
+    </div>
+    <div>
+      <div class="stat">
+        <span id="avgCombo">0</span>
+        Avg. Combo
+      </div>
+      <div class="stat">
+        <span id="accuracy">0%</span>
+        Accuracy
+      </div>
+    </div>
+  </section>
+</body>
+
+<script src="script.js"></script>
+
+</html>
