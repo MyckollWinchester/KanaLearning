@@ -8,6 +8,7 @@
 }
 
 body {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -356,4 +357,44 @@ input[name="hiragana"] + label:hover::after, input[name="katakana"] + label:hove
 .stat span {
   font-size: 3rem;
   font-weight: 700;
+}
+
+
+
+@media (max-height: 768px), (max-width: 750px) {
+  #stats {
+    margin-top: 10vh;
+    gap: 2rem;
+  }
+
+  .stat + .stat {
+    margin-top: 2rem;
+  }
+
+  .stat span {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 650px) {
+  #prev2, #next2 {
+    display: none;
+  }
+
+  #menu {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #menu-header-container {
+    width: 100vw;
+    height: 66px;
+  }
+}
+
+@media (max-height: 450px), (max-width: 480px) {
+  #stats {
+    display: none;
+  }
 }
