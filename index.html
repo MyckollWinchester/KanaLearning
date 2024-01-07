@@ -3,13 +3,14 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kana Learning</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon.ico">
 </head>
 
 <body>
+  <!-- MENU -->
   <button type="button" class="menu-button open-menu-button" id="open-menu-button" aria-label="Open Menu Button">
     <svg width="16px" height="16px">
       <path fill="white"
@@ -30,100 +31,105 @@
       <section class="menu-section">
         <span>Game Mode</span>
         <input type="radio" name="kana-type" id="type-hiragana">
-        <label for="type-hiragana">ひらがな<span>H i r a g a n a</span></label>
+        <label for="type-hiragana" lang="ja-Hira">ひらがな<span lang="ja-Latn">Hiragana</span></label>
         <input type="radio" name="kana-type" id="type-katakana">
-        <label for="type-katakana">カタカナ<span>K a t a k a n a</span></label>
+        <label for="type-katakana" lang="ja-Kana">カタカナ<span lang="ja-Latn">Katakana</span></label>
       </section>
       <div class="menu-separator"></div>
       <section class="menu-section">
         <span>Selected Kana</span>
         <input type="checkbox" name="hiragana" id="hiragana-a">
-        <label for="hiragana-a">あいうえお</label>
+        <label for="hiragana-a" lang="ja-Hira">あいうえお</label>
         <input type="checkbox" name="hiragana" id="hiragana-ka">
-        <label for="hiragana-ka">かきくけこ</label>
+        <label for="hiragana-ka" lang="ja-Hira">かきくけこ</label>
         <input type="checkbox" name="hiragana" id="hiragana-sa">
-        <label for="hiragana-sa">さしすせそ</label>
+        <label for="hiragana-sa" lang="ja-Hira">さしすせそ</label>
         <input type="checkbox" name="hiragana" id="hiragana-ta">
-        <label for="hiragana-ta">たちつてと</label>
+        <label for="hiragana-ta" lang="ja-Hira">たちつてと</label>
         <input type="checkbox" name="hiragana" id="hiragana-na">
-        <label for="hiragana-na">なにぬねの</label>
+        <label for="hiragana-na" lang="ja-Hira">なにぬねの</label>
         <input type="checkbox" name="hiragana" id="hiragana-ha">
-        <label for="hiragana-ha">はひふへほ</label>
+        <label for="hiragana-ha" lang="ja-Hira">はひふへほ</label>
         <input type="checkbox" name="hiragana" id="hiragana-ma">
-        <label for="hiragana-ma">まみむめも</label>
+        <label for="hiragana-ma" lang="ja-Hira">まみむめも</label>
         <input type="checkbox" name="hiragana" id="hiragana-ya">
-        <label for="hiragana-ya">やゆよ</label>
+        <label for="hiragana-ya" lang="ja-Hira">やゆよ</label>
         <input type="checkbox" name="hiragana" id="hiragana-ra">
-        <label for="hiragana-ra">らりるれろ</label>
+        <label for="hiragana-ra" lang="ja-Hira">らりるれろ</label>
         <input type="checkbox" name="hiragana" id="hiragana-wa">
-        <label for="hiragana-wa">わをん</label>
+        <label for="hiragana-wa" lang="ja-Hira">わをん</label>
         <br id="sep-h">
         <input type="checkbox" name="hiragana" id="hiragana-ga">
-        <label for="hiragana-ga">がぎぐげご</label>
+        <label for="hiragana-ga" lang="ja-Hira">がぎぐげご</label>
         <input type="checkbox" name="hiragana" id="hiragana-za">
-        <label for="hiragana-za">ざじずぜぞ</label>
+        <label for="hiragana-za" lang="ja-Hira">ざじずぜぞ</label>
         <input type="checkbox" name="hiragana" id="hiragana-da">
-        <label for="hiragana-da">だぢづでど</label>
+        <label for="hiragana-da" lang="ja-Hira">だぢづでど</label>
         <input type="checkbox" name="hiragana" id="hiragana-ba">
-        <label for="hiragana-ba">ばびぶべぼ</label>
+        <label for="hiragana-ba" lang="ja-Hira">ばびぶべぼ</label>
         <input type="checkbox" name="hiragana" id="hiragana-pa">
-        <label for="hiragana-pa">ぱぴぷぺぽ</label>
+        <label for="hiragana-pa" lang="ja-Hira">ぱぴぷぺぽ</label>
         <input type="checkbox" name="katakana" id="katakana-a">
-        <label for="katakana-a">アイウエオ</label>
+        <label for="katakana-a" lang="ja-Kana">アイウエオ</label>
         <input type="checkbox" name="katakana" id="katakana-ka">
-        <label for="katakana-ka">カキクケコ</label>
+        <label for="katakana-ka" lang="ja-Kana">カキクケコ</label>
         <input type="checkbox" name="katakana" id="katakana-sa">
-        <label for="katakana-sa">サシスセソ</label>
+        <label for="katakana-sa" lang="ja-Kana">サシスセソ</label>
         <input type="checkbox" name="katakana" id="katakana-ta">
-        <label for="katakana-ta">タチツテト</label>
+        <label for="katakana-ta" lang="ja-Kana">タチツテト</label>
         <input type="checkbox" name="katakana" id="katakana-na">
-        <label for="katakana-na">ナニヌネノ</label>
+        <label for="katakana-na" lang="ja-Kana">ナニヌネノ</label>
         <input type="checkbox" name="katakana" id="katakana-ha">
-        <label for="katakana-ha">ハヒフヘホ</label>
+        <label for="katakana-ha" lang="ja-Kana">ハヒフヘホ</label>
         <input type="checkbox" name="katakana" id="katakana-ma">
-        <label for="katakana-ma">マミムメモ</label>
+        <label for="katakana-ma" lang="ja-Kana">マミムメモ</label>
         <input type="checkbox" name="katakana" id="katakana-ya">
-        <label for="katakana-ya">ヤユヨ</label>
+        <label for="katakana-ya" lang="ja-Kana">ヤユヨ</label>
         <input type="checkbox" name="katakana" id="katakana-ra">
-        <label for="katakana-ra">ラリルレロ</label>
+        <label for="katakana-ra" lang="ja-Kana">ラリルレロ</label>
         <input type="checkbox" name="katakana" id="katakana-wa">
-        <label for="katakana-wa">ワヲン</label>
+        <label for="katakana-wa" lang="ja-Kana">ワヲン</label>
         <br id="sep-k">
         <input type="checkbox" name="katakana" id="katakana-ga">
-        <label for="katakana-ga">ガギグゲゴ</label>
+        <label for="katakana-ga" lang="ja-Kana">ガギグゲゴ</label>
         <input type="checkbox" name="katakana" id="katakana-za">
-        <label for="katakana-za">ザジズゼゾ</label>
+        <label for="katakana-za" lang="ja-Kana">ザジズゼゾ</label>
         <input type="checkbox" name="katakana" id="katakana-da">
-        <label for="katakana-da">ダヂヅデド</label>
+        <label for="katakana-da" lang="ja-Kana">ダヂヅデド</label>
         <input type="checkbox" name="katakana" id="katakana-ba">
-        <label for="katakana-ba">バビブベボ</label>
+        <label for="katakana-ba" lang="ja-Kana">バビブベボ</label>
         <input type="checkbox" name="katakana" id="katakana-pa">
-        <label for="katakana-pa">パピプペポ</label>
+        <label for="katakana-pa" lang="ja-Kana">パピプペポ</label>
       </section>
     </div>
   </div>
+  <div id="screen-cover" hidden></div>
+
+  <!-- DISPLAY -->
   <div id="display">
     <div class="card">
       <p></p>
-      <span class="kana" id="prev2"></span>
+      <span class="kana" id="prev2" lang="ja-Hrkt"></span>
     </div>
     <div class="card">
       <p></p>
-      <span class="kana" id="prev"></span>
+      <span class="kana" id="prev" lang="ja-Hrkt"></span>
     </div>
     <div class="card">
       <p></p>
-      <span class="kana" id="curr"></span>
+      <span class="kana" id="curr" lang="ja-Hrkt"></span>
     </div>
     <div class="card">
       <p></p>
-      <span class="kana" id="next"></span>
+      <span class="kana" id="next" lang="ja-Hrkt"></span>
     </div>
     <div class="card">
       <p></p>
-      <span class="kana" id="next2"></span>
+      <span class="kana" id="next2" lang="ja-Hrkt"></span>
     </div>
   </div>
+
+  <!-- STATS -->
   <section id="stats">
     <div>
       <div class="stat">
