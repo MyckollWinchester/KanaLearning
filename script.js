@@ -86,8 +86,11 @@ const ROMAJI = [
 ];
 
 const menu = document.getElementById('menu');
+const screenCover = document.getElementById('screen-cover');
 const openMenuButton = document.getElementById('open-menu-button');
 const closeMenuButton = document.getElementById('menu-close-button');
+const typeHiragana = document.getElementById('type-hiragana');
+const typeKatakana = document.getElementById('type-katakana');
 
 const counter = document.getElementById('counter');
 const display = document.getElementById('display');
@@ -170,13 +173,19 @@ function getRandomKana() {
     return selectedKanaList[rand];
 }
 
-function lockInput() {
+function lockInput(time=500) {
     locked = true;
-    curr.style.opacity = 0.5;
-    setTimeout(() => {
-        curr.style.opacity = 1;
-        locked = false;
-    }, 500);
+    if (time > 0) {
+        curr.style.opacity = 0.5;
+        setTimeout(() => {
+            curr.style.opacity = 1;
+            unlockInput();
+        }, time);
+    }
+}
+
+function unlockInput() {
+    locked = false;
 }
 
 function expand() {
@@ -258,7 +267,26 @@ function updateStats() {
 
 let ithSound = 0;
 
+function hotKeys(e) {
+    switch (e.key) {
+        case 'Escape':
+            menu.attributes.hidden ? menuActions('open') : menuActions('close');
+            break;
+        case `'`:
+            typeHiragana.click();
+            break;
+        case `¿`:
+            typeKatakana.click();
+            break;
+    }
+}
+
 function updateBuffer(e) {
+    if (!menu.attributes.hidden || e.key.length !== 1 || !/[a-z]/.test(e.key)) {
+        hotKeys(e);
+        return;
+    }
+
     if (!locked) {
         clickSounds[ithSound].play();
         ithSound = (ithSound + 1) % clickSounds.length;
@@ -322,6 +350,21 @@ function updateMenu() {
     }
 }
 
+function menuActions(action) {
+    switch (action) {
+        case 'open':
+            menu.removeAttribute('hidden');
+            screenCover.removeAttribute('hidden');
+            lockInput(0);
+            break;
+        case 'close':
+            menu.setAttribute('hidden', '');
+            screenCover.setAttribute('hidden', '');
+            unlockInput();
+            break;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // localStorage.clear();
     loadLocalStorage();
@@ -336,7 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('type-hiragana').checked = false;
     }
 
-    document.getElementById('type-hiragana').addEventListener('click', () => {
+    typeHiragana.addEventListener('click', () => {
+        if (mode.hiragana) return;
         mode.hiragana = true;
         mode.katakana = false;
         updateMenu();
@@ -344,7 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
         reroll();
     });
 
-    document.getElementById('type-katakana').addEventListener('click', () => {
+    typeKatakana.addEventListener('click', () => {
+        if (mode.katakana) return;
         mode.hiragana = false;
         mode.katakana = true;
         updateMenu();
@@ -354,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateMenu();
 
-    document.addEventListener('keypress', updateBuffer);
+    document.addEventListener('keydown', updateBuffer);
 
     for (let i = 0; i < 15; i++) {
         if (selectedHiragana[i]) {
@@ -414,13 +459,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    openMenuButton.addEventListener('click', () => {
-        menu.removeAttribute('hidden');
-    });
+    openMenuButton.addEventListener('click', () => { menuActions('open'); });
+    screenCover.addEventListener('click', () => { menuActions('close'); });
+    closeMenuButton.addEventListener('click', () => { menuActions('close'); });
 
-    closeMenuButton.addEventListener('click', () => {
-        menu.setAttribute('hidden', '');
+    window.addEventListener('beforeunload', () => {
+        saveLocalStorage();
     });
 });
-
-window.addEventListener('beforeunload', () => { saveLocalStorage() });
