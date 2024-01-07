@@ -250,6 +250,19 @@ input[name="hiragana"] + label:hover::after, input[name="katakana"] + label:hove
   content: "pa pi pu pe po";
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #667;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #445; 
+}
+
 /* DISPLAY */
 
 #display {
