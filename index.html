@@ -17,7 +17,7 @@
         d="M 0 2.398438 L 0 4 L 16 4 L 16 2.398438 Z M 0 7.199219 L 0 8.800781 L 16 8.800781 L 16 7.199219 Z M 0 12 L 0 13.601562 L 16 13.601562 L 16 12 Z M 0 12" />
     </svg>
   </button>
-  <div id="menu" hidden>
+  <div id="menu-header-container" hidden>
     <header class="menu-header">
       <button type="button" class="menu-button" id="menu-close-button" aria-label="Close Menu Button">
         <svg width="16px" height="16px">
@@ -27,7 +27,9 @@
       </button>
       <h1 class="menu-title">Settings ⚙️</h1>
     </header>
-    <div class="menu-content">
+  </div>
+  <div id="menu" hidden>
+    <scrollable-region class="menu-content">
       <section class="menu-section">
         <span>Game Mode</span>
         <input type="radio" name="kana-type" id="type-hiragana">
@@ -101,7 +103,7 @@
         <input type="checkbox" name="katakana" id="katakana-pa">
         <label for="katakana-pa" lang="ja-Kana">パピプペポ</label>
       </section>
-    </div>
+    </scrollable-region>
   </div>
   <div id="screen-cover" hidden></div>
 

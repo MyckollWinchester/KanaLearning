@@ -86,6 +86,7 @@ const ROMAJI = [
 ];
 
 const menu = document.getElementById('menu');
+const menuHeaderContainer = document.getElementById('menu-header-container');
 const screenCover = document.getElementById('screen-cover');
 const openMenuButton = document.getElementById('open-menu-button');
 const closeMenuButton = document.getElementById('menu-close-button');
@@ -354,11 +355,13 @@ function menuActions(action) {
     switch (action) {
         case 'open':
             menu.removeAttribute('hidden');
+            menuHeaderContainer.removeAttribute('hidden')
             screenCover.removeAttribute('hidden');
             lockInput(0);
             break;
         case 'close':
             menu.setAttribute('hidden', '');
+            menuHeaderContainer.setAttribute('hidden', '')
             screenCover.setAttribute('hidden', '');
             unlockInput();
             break;
