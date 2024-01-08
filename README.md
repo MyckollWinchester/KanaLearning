@@ -2,7 +2,7 @@
   <a target="_blank" href="https://myckollwinchester.github.io/p/kana-learning.html"><img src="images/favicon.ico" width="24"></a> KanaLearning
 </h1>
 
-A simple game to learn the japanese alphabet, play a demo [here](https://myckollwinchester.github.io/p/kana-learning.html).
+A simple game to learn the Japanese alphabet, play a demo [here](https://myckollwinchester.github.io/p/kana-learning.html).
 
 ![KanaLearning GIF Demo](/demo.webp)
 
