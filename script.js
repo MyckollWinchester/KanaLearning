@@ -25,7 +25,7 @@ const HIRAGANA = [
     ['じゃ', 'じゅ', 'じょ'],
     ['びゃ', 'びゅ', 'びょ'],
     ['ぴゃ', 'ぴゅ', 'ぴょ']
-];
+]
 
 const KATAKANA = [
     ['ア', 'イ', 'ウ', 'エ', 'オ'],
@@ -54,7 +54,7 @@ const KATAKANA = [
     ['ジャ', 'ジュ', 'ジョ'],
     ['ビャ', 'ビュ', 'ビョ'],
     ['ピャ', 'ピュ', 'ピョ']
-];
+]
 
 const ROMAJI = [
     ['a', 'i', 'u', 'e', 'o'],
@@ -83,37 +83,31 @@ const ROMAJI = [
     ['ja', 'ju', 'jo'],
     ['bya', 'byu', 'byo'],
     ['pya', 'pyu', 'pyo']
-];
+]
 
-const menu = document.getElementById('menu');
-const menuHeaderContainer = document.getElementById('menu-header-container');
-const screenCover = document.getElementById('screen-cover');
-const openMenuButton = document.getElementById('open-menu-button');
-const closeMenuButton = document.getElementById('menu-close-button');
-const typeHiragana = document.getElementById('type-hiragana');
-const typeKatakana = document.getElementById('type-katakana');
+const menu = document.getElementById('menu')
+const menuHeaderContainer = document.getElementById('menu-header-container')
+const screenCover = document.getElementById('screen-cover')
+const openMenuButton = document.getElementById('open-menu-button')
+const closeMenuButton = document.getElementById('menu-close-button')
+const typeHiragana = document.getElementById('type-hiragana')
+const typeKatakana = document.getElementById('type-katakana')
 
-const counter = document.getElementById('counter');
-const display = document.getElementById('display');
+const display = document.getElementById('display')
+const prev2 = document.getElementById('prev2')
+const prev1 = document.getElementById('prev')
+const curr = document.getElementById('curr')
+const next1 = document.getElementById('next')
+const next2 = document.getElementById('next2')
 
-const prev2 = document.getElementById('prev2');
-const prev1 = document.getElementById('prev');
-const curr = document.getElementById('curr');
-const next1 = document.getElementById('next');
-const next2 = document.getElementById('next2');
+const statCombo = document.getElementById('combo')
+const statMaxCombo = document.getElementById('maxCombo')
+const statSeen = document.getElementById('seen')
+const statCorrect = document.getElementById('correct')
+const statAccuracy = document.getElementById('accuracy')
+const statAvgCombo = document.getElementById('avgCombo')
 
-const statCombo = document.getElementById('combo');
-const statMaxCombo = document.getElementById('maxCombo');
-const statSeen = document.getElementById('seen');
-const statCorrect = document.getElementById('correct');
-const statAccuracy = document.getElementById('accuracy');
-const statAvgCombo = document.getElementById('avgCombo');
-
-let clickSounds = [];
-
-for (let i = 1; i <= 12; i++) {
-    clickSounds.push(new Audio(`sounds/click${i}.wav`));
-}
+let clickSounds = Array.from({ length: 12 }, (_, i) => new Audio(`sounds/click${i + 1}.wav`))
 
 let mode = {
     hiragana: true,
@@ -136,24 +130,24 @@ let selectedKatakana = {
     21: false, 22: false, 23: false, 24: false, 25: false,
 }
 
-let selectedKanaList = [];
-let selectedAnswerList = [];
+let selectedKanaList = []
+let selectedAnswerList = []
 
 function updateLists() {
-    selectedKanaList = [];
-    selectedAnswerList = [];
+    selectedKanaList = []
+    selectedAnswerList = []
     if (mode.hiragana) {
         for (let i = 0; i < 26; i++) {
             if (selectedHiragana[i]) {
-                selectedKanaList = selectedKanaList.concat(HIRAGANA[i]);
-                selectedAnswerList = selectedAnswerList.concat(ROMAJI[i]);
+                selectedKanaList = selectedKanaList.concat(HIRAGANA[i])
+                selectedAnswerList = selectedAnswerList.concat(ROMAJI[i])
             }
         }
     } else if (mode.katakana) {
         for (let i = 0; i < 26; i++) {
             if (selectedKatakana[i]) {
-                selectedKanaList = selectedKanaList.concat(KATAKANA[i]);
-                selectedAnswerList = selectedAnswerList.concat(ROMAJI[i]);
+                selectedKanaList = selectedKanaList.concat(KATAKANA[i])
+                selectedAnswerList = selectedAnswerList.concat(ROMAJI[i])
             }
         }
     }
@@ -165,308 +159,306 @@ let stats = {
     _comboBreaks: 1
 }
 
-let buffer = '';
-let correct;
-let locked;
+let buffer = ''
+let correct, locked
 
 function getRandomKana() {
-    const rand = Math.floor(Math.random() * selectedKanaList.length);
-    return selectedKanaList[rand];
+    const rand = Math.floor(Math.random() * selectedKanaList.length)
+    return selectedKanaList[rand]
 }
 
-function lockInput(time=500) {
-    locked = true;
+function lockInput(time = 500) {
+    locked = true
     if (time > 0) {
-        curr.style.opacity = 0.5;
+        curr.style.opacity = 0.5
         setTimeout(() => {
-            curr.style.opacity = 1;
-            unlockInput();
-        }, time);
+            curr.style.opacity = 1
+            unlockInput()
+        }, time)
     }
 }
 
 function unlockInput() {
-    locked = false;
+    locked = false
 }
 
 function expand() {
-    curr.style.transition = 'border 0.01s';
-    curr.style.border = '#bbb solid 12px';
+    curr.style.transition = 'border 0.01s'
+    curr.style.border = '#bbb solid 12px'
     setTimeout(() => {
-        curr.style.transition = 'border 0.15s';
-        curr.style.border = '#bbb solid 4px';
-    }, 50);
+        curr.style.transition = 'border 0.15s'
+        curr.style.border = '#bbb solid 4px'
+    }, 50)
 }
 
 function compare() {
-    correctAnswer = selectedAnswerList[selectedKanaList.indexOf(curr.innerText)];
+    correctAnswer = selectedAnswerList[selectedKanaList.indexOf(curr.innerText)]
     if (correctAnswer === buffer || !correctAnswer.startsWith(buffer)) {
         if (correctAnswer === buffer) {
-            correct = true;
+            correct = true
         } else {
-            lockInput();
-            correct = false;
+            lockInput()
+            correct = false
         }
-        buffer = '';
-        updateStats();
-        updateDisplay();
+        buffer = ''
+        updateStats()
+        updateDisplay()
     }
 }
 
 function updateDisplay() {
-    prev2.innerText = prev1.innerText;
-    prev1.innerText = curr.innerText;
-    curr.innerText = next1.innerText;
-    next1.innerText = next2.innerText;
-    next2.innerText = getRandomKana();
+    prev2.innerText = prev1.innerText
+    prev1.innerText = curr.innerText
+    curr.innerText = next1.innerText
+    next1.innerText = next2.innerText
+    next2.innerText = getRandomKana()
 
-    prev2.parentElement.children[0].innerText = prev1.parentElement.children[0].innerText;
-    prev2.style.color = prev1.style.color;
-    prev2.style.backgroundColor = prev1.style.backgroundColor;
-    prev2.style.border = prev1.style.border;
+    prev2.parentElement.children[0].innerText = prev1.parentElement.children[0].innerText
+    prev2.style.color = prev1.style.color
+    prev2.style.backgroundColor = prev1.style.backgroundColor
+    prev2.style.border = prev1.style.border
 
     if (correct) {
         prev1.style.color = '#4f4'
-        prev1.style.backgroundColor = '#393';
-        prev1.style.border = '#4f4 solid 4px';
-        prev1.parentElement.children[0].innerHTML = '';
+        prev1.style.backgroundColor = '#393'
+        prev1.style.border = '#4f4 solid 4px'
+        prev1.parentElement.children[0].innerHTML = ''
     } else {
-        let newP = document.createElement("p");
-        newP.innerText = selectedAnswerList[selectedKanaList.indexOf(prev1.innerText)];
+        let newP = document.createElement("p")
+        newP.innerText = selectedAnswerList[selectedKanaList.indexOf(prev1.innerText)]
         prev1.style.color = '#f44'
-        prev1.style.backgroundColor = '#933';
-        prev1.style.border = '#f44 solid 4px';
-        prev1.parentElement.children[0].replaceWith(newP);
+        prev1.style.backgroundColor = '#933'
+        prev1.style.border = '#f44 solid 4px'
+        prev1.parentElement.children[0].replaceWith(newP)
     }
 }
 
 function updateStats() {
-    stats.seen++;
+    stats.seen++
 
     if (correct) {
-        stats.combo++;
-        stats.correct++;
+        stats.combo++
+        stats.correct++
     } else {
-        stats.combo = 0;
-        stats._comboBreaks++;
+        stats.combo = 0
+        stats._comboBreaks++
     }
 
     if (stats.combo > stats.maxCombo) {
-        stats.maxCombo = stats.combo;
+        stats.maxCombo = stats.combo
     }
 
-    stats.accuracy = Math.round(10000 * stats.correct / stats.seen) / 100;
-    stats.avgCombo = Math.round(stats.correct / stats._comboBreaks);
+    stats.accuracy = Math.round(10000 * stats.correct / stats.seen) / 100
+    stats.avgCombo = Math.round(stats.correct / stats._comboBreaks)
 
-    statCombo.innerText = stats.combo;
-    statMaxCombo.innerText = stats.maxCombo;
-    statSeen.innerText = stats.seen;
-    statCorrect.innerText = stats.correct;
-    statAccuracy.innerText = String(stats.accuracy) + '%';
-    statAvgCombo.innerText = stats.avgCombo;
+    statCombo.innerText = stats.combo
+    statMaxCombo.innerText = stats.maxCombo
+    statSeen.innerText = stats.seen
+    statCorrect.innerText = stats.correct
+    statAccuracy.innerText = String(stats.accuracy) + '%'
+    statAvgCombo.innerText = stats.avgCombo
 }
 
-let ithSound = 0;
+let ithSound = 0
 
 function hotKeys(e) {
     switch (e.key) {
         case 'Escape':
-            menu.attributes.hidden ? menuActions('open') : menuActions('close');
-            break;
+            menu.attributes.hidden ? menuActions('open') : menuActions('close')
+            break
         case `'`:
-            typeHiragana.click();
-            break;
+            typeHiragana.click()
+            break
         case `¿`:
-            typeKatakana.click();
-            break;
+            typeKatakana.click()
+            break
     }
 }
 
 function updateBuffer(e) {
-    if (!menu.attributes.hidden || e.key.length !== 1 || !/[a-z]/.test(e.key)) {
-        hotKeys(e);
-        return;
+    if (!menu.attributes.hidden || e.key.length !== 1 || !/[a-zA-Z]/.test(e.key)) {
+        hotKeys(e)
+        return
     }
 
     if (!locked) {
-        clickSounds[ithSound].play();
-        ithSound = (ithSound + 1) % clickSounds.length;
-        expand();
-        buffer += e.key.toLowerCase();
-        compare();
+        clickSounds[ithSound].play()
+        ithSound = (ithSound + 1) % clickSounds.length
+        expand()
+        buffer += e.key.toLowerCase()
+        compare()
     }
 }
 
 function reroll() {
-    for (let i = 2; i < 5; i++) {
-        display.children[i].children[1].innerText = getRandomKana();
-    }
+    for (let i = 2; i < 5; i++)
+        display.children[i].children[1].innerText = getRandomKana()
 }
 
 function saveLocalStorage() {
-    localStorage.setItem("stats", JSON.stringify(stats));
-    localStorage.setItem("selectedHiragana", JSON.stringify(selectedHiragana));
-    localStorage.setItem("selectedKatakana", JSON.stringify(selectedKatakana));
-    localStorage.setItem("mode", JSON.stringify(mode));
+    localStorage.setItem("stats", JSON.stringify(stats))
+    localStorage.setItem("selectedHiragana", JSON.stringify(selectedHiragana))
+    localStorage.setItem("selectedKatakana", JSON.stringify(selectedKatakana))
+    localStorage.setItem("mode", JSON.stringify(mode))
 }
 
 function loadLocalStorage() {
     if (localStorage.getItem("stats")) {
-        stats = JSON.parse(localStorage.getItem("stats"));
-        statCombo.innerText = stats.combo;
-        statMaxCombo.innerText = stats.maxCombo;
-        statSeen.innerText = stats.seen;
-        statCorrect.innerText = stats.correct;
-        statAccuracy.innerText = String(stats.accuracy) + '%';
-        statAvgCombo.innerText = stats.avgCombo;
+        stats = JSON.parse(localStorage.getItem("stats"))
+        statCombo.innerText = stats.combo
+        statMaxCombo.innerText = stats.maxCombo
+        statSeen.innerText = stats.seen
+        statCorrect.innerText = stats.correct
+        statAccuracy.innerText = String(stats.accuracy) + '%'
+        statAvgCombo.innerText = stats.avgCombo
     }
     if (localStorage.getItem("selectedHiragana")) {
-        selectedHiragana = JSON.parse(localStorage.getItem("selectedHiragana"));
+        selectedHiragana = JSON.parse(localStorage.getItem("selectedHiragana"))
     }
     if (localStorage.getItem("selectedKatakana")) {
-        selectedKatakana = JSON.parse(localStorage.getItem("selectedKatakana"));
+        selectedKatakana = JSON.parse(localStorage.getItem("selectedKatakana"))
     }
     if (localStorage.getItem("mode")) {
-        mode = JSON.parse(localStorage.getItem("mode"));
+        mode = JSON.parse(localStorage.getItem("mode"))
     }
 }
 
-const kanas = ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'ga', 'za', 'da', 'ba', 'pa'];
+const kanas = ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'ga', 'za', 'da', 'ba', 'pa']
 
 function updateMenu() {
     if (mode.hiragana) {
-        document.getElementById('sep-h').style.display = 'flex';
-        document.getElementById('sep-k').style.display = 'none';
-        for (let i = 0; i < 15; i++) 
-            document.querySelector(`label[for="katakana-${kanas[i]}"]`).style.display = 'none';
+        document.getElementById('sep-h').style.display = 'flex'
+        document.getElementById('sep-k').style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="hiragana-${kanas[i]}"]`).style.display = 'flex';
+            document.querySelector(`label[for="katakana-${kanas[i]}"]`).style.display = 'none'
+        for (let i = 0; i < 15; i++)
+            document.querySelector(`label[for="hiragana-${kanas[i]}"]`).style.display = 'flex'
     } else if (mode.katakana) {
-        document.getElementById('sep-h').style.display = 'none';
-        document.getElementById('sep-k').style.display = 'flex';
+        document.getElementById('sep-h').style.display = 'none'
+        document.getElementById('sep-k').style.display = 'flex'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="hiragana-${kanas[i]}"]`).style.display = 'none';
+            document.querySelector(`label[for="hiragana-${kanas[i]}"]`).style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="katakana-${kanas[i]}"]`).style.display = 'flex';
+            document.querySelector(`label[for="katakana-${kanas[i]}"]`).style.display = 'flex'
     }
 }
 
 function menuActions(action) {
     switch (action) {
         case 'open':
-            menu.removeAttribute('hidden');
+            menu.removeAttribute('hidden')
             menuHeaderContainer.removeAttribute('hidden')
-            screenCover.removeAttribute('hidden');
-            lockInput(0);
-            break;
+            screenCover.removeAttribute('hidden')
+            lockInput(0)
+            break
         case 'close':
-            menu.setAttribute('hidden', '');
+            menu.setAttribute('hidden', '')
             menuHeaderContainer.setAttribute('hidden', '')
-            screenCover.setAttribute('hidden', '');
-            unlockInput();
-            break;
+            screenCover.setAttribute('hidden', '')
+            unlockInput()
+            break
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // localStorage.clear();
-    loadLocalStorage();
-    updateLists();
-    reroll();
+    // localStorage.clear()
+    loadLocalStorage()
+    updateLists()
+    reroll()
 
     if (mode.hiragana) {
-        document.getElementById('type-hiragana').checked = true;
-        document.getElementById('type-katakana').checked = false;
+        document.getElementById('type-hiragana').checked = true
+        document.getElementById('type-katakana').checked = false
     } else if (mode.katakana) {
-        document.getElementById('type-katakana').checked = true;
-        document.getElementById('type-hiragana').checked = false;
+        document.getElementById('type-katakana').checked = true
+        document.getElementById('type-hiragana').checked = false
     }
 
     typeHiragana.addEventListener('click', () => {
-        if (mode.hiragana) return;
-        mode.hiragana = true;
-        mode.katakana = false;
-        updateMenu();
-        updateLists();
-        reroll();
-    });
+        if (mode.hiragana) return
+        mode.hiragana = true
+        mode.katakana = false
+        updateMenu()
+        updateLists()
+        reroll()
+    })
 
     typeKatakana.addEventListener('click', () => {
-        if (mode.katakana) return;
-        mode.hiragana = false;
-        mode.katakana = true;
-        updateMenu();
-        updateLists();
-        reroll();
-    });
+        if (mode.katakana) return
+        mode.hiragana = false
+        mode.katakana = true
+        updateMenu()
+        updateLists()
+        reroll()
+    })
 
-    updateMenu();
+    updateMenu()
 
-    document.addEventListener('keydown', updateBuffer);
+    document.addEventListener('keydown', updateBuffer)
 
     for (let i = 0; i < 15; i++) {
         if (selectedHiragana[i]) {
-            document.getElementById(`hiragana-${kanas[i]}`).checked = true;
+            document.getElementById(`hiragana-${kanas[i]}`).checked = true
         }
     }
 
     for (let i = 0; i < 15; i++) {
         document.getElementById(`hiragana-${kanas[i]}`).addEventListener('click', () => {
-            selectedHiragana[i] = !selectedHiragana[i];
+            selectedHiragana[i] = !selectedHiragana[i]
             if (selectedHiragana[i]) {
-                document.getElementById(`hiragana-${kanas[i]}`).checked = true;
+                document.getElementById(`hiragana-${kanas[i]}`).checked = true
             } else {
-                document.getElementById(`hiragana-${kanas[i]}`).checked = false;
+                document.getElementById(`hiragana-${kanas[i]}`).checked = false
             }
-            selectedKanaList = [];
-            selectedAnswerList = [];
+            selectedKanaList = []
+            selectedAnswerList = []
             for (let j = 0; j < 26; j++) {
                 if (selectedHiragana[j]) {
-                    updateLists();
-                    reroll();
-                    break;
+                    updateLists()
+                    reroll()
+                    break
                 } else if (j === 25) {
-                    selectedHiragana[i] = true;
-                    document.getElementById(`hiragana-${kanas[i]}`).checked = true;
+                    selectedHiragana[i] = true
+                    document.getElementById(`hiragana-${kanas[i]}`).checked = true
                 }
             }
-        });
+        })
     }
 
     for (let i = 0; i < 15; i++) {
         if (selectedKatakana[i]) {
-            document.getElementById(`katakana-${kanas[i]}`).checked = true;
+            document.getElementById(`katakana-${kanas[i]}`).checked = true
         }
     }
 
     for (let i = 0; i < 15; i++) {
         document.getElementById(`katakana-${kanas[i]}`).addEventListener('click', () => {
-            selectedKatakana[i] = !selectedKatakana[i];
+            selectedKatakana[i] = !selectedKatakana[i]
             if (selectedKatakana[i]) {
-                document.getElementById(`katakana-${kanas[i]}`).checked = true;
+                document.getElementById(`katakana-${kanas[i]}`).checked = true
             } else {
-                document.getElementById(`katakana-${kanas[i]}`).checked = false;
+                document.getElementById(`katakana-${kanas[i]}`).checked = false
             }
-            selectedKanaList = [];
-            selectedAnswerList = [];
+            selectedKanaList = []
+            selectedAnswerList = []
             for (let j = 0; j < 26; j++) {
                 if (selectedKatakana[j]) {
-                    updateLists();
-                    reroll();
-                    break;
+                    updateLists()
+                    reroll()
+                    break
                 } else if (j === 25) {
-                    selectedKatakana[i] = true;
-                    document.getElementById(`katakana-${kanas[i]}`).checked = true;
+                    selectedKatakana[i] = true
+                    document.getElementById(`katakana-${kanas[i]}`).checked = true
                 }
             }
-        });
+        })
     }
-    
-    openMenuButton.addEventListener('click', () => { menuActions('open'); });
-    screenCover.addEventListener('click', () => { menuActions('close'); });
-    closeMenuButton.addEventListener('click', () => { menuActions('close'); });
+
+    openMenuButton.addEventListener('click', () => { menuActions('open') })
+    screenCover.addEventListener('click', () => { menuActions('close') })
+    closeMenuButton.addEventListener('click', () => { menuActions('close') })
 
     window.addEventListener('beforeunload', () => {
-        saveLocalStorage();
-    });
-});
+        saveLocalStorage()
+    })
+})
