@@ -1,3 +1,7 @@
+'use strict'
+
+/* CONSTANTS */
+
 const HIRAGANA = [
     ['あ', 'い', 'う', 'え', 'お'],
     ['か', 'き', 'く', 'け', 'こ'],
@@ -85,6 +89,12 @@ const ROMAJI = [
     ['pya', 'pyu', 'pyo']
 ]
 
+const KANAS = ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'ga', 'za', 'da', 'ba', 'pa']
+
+const clickSounds = Array.from({ length: 12 }, (_, i) => new Audio(`sounds/click${i + 1}.wav`))
+
+/* DOM Elements */
+
 const menu = document.getElementById('menu')
 const menuHeaderContainer = document.getElementById('menu-header-container')
 const screenCover = document.getElementById('screen-cover')
@@ -107,31 +117,49 @@ const statCorrect = document.getElementById('correct')
 const statAccuracy = document.getElementById('accuracy')
 const statAvgCombo = document.getElementById('avgCombo')
 
-let clickSounds = Array.from({ length: 12 }, (_, i) => new Audio(`sounds/click${i + 1}.wav`))
+/* GLOBAL VARIABLES */
 
-let mode = {
-    hiragana: true,
-    katakana: false,
-}
+let mode = { hiragana: true, katakana: false }
 
 let selectedHiragana = {
-    0: true, 1: true, 2: true, 3: true, 4: true, 5: true,
-    6: true, 7: true, 8: true, 9: true, 10: false,
+    0: true, 1: true, 2: true, 3: true, 4: true,
+    5: true, 6: true, 7: true, 8: true, 9: true, 10: false,
     11: false, 12: false, 13: false, 14: false, 15: false,
     16: false, 17: false, 18: false, 19: false, 20: false,
     21: false, 22: false, 23: false, 24: false, 25: false,
 }
 
 let selectedKatakana = {
-    0: true, 1: true, 2: true, 3: true, 4: true, 5: true,
-    6: true, 7: true, 8: true, 9: true, 10: false,
+    0: true, 1: true, 2: true, 3: true, 4: true,
+    5: true, 6: true, 7: true, 8: true, 9: true, 10: false,
     11: false, 12: false, 13: false, 14: false, 15: false,
     16: false, 17: false, 18: false, 19: false, 20: false,
     21: false, 22: false, 23: false, 24: false, 25: false,
 }
 
+let stats = {
+    combo: 0, maxCombo: 0, avgCombo: 0,
+    seen: 0, correct: 0, accuracy: 0,
+    _comboBreaks: 1
+}
+
 let selectedKanaList = []
 let selectedAnswerList = []
+let buffer = ''
+let correct, locked
+
+/* STOLEN FUNCTIONS */
+
+function shuffle(array) {
+    let currentIndex = array.length, randomIndex
+    while (currentIndex > 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+    } return array
+}
+
+/* FUNCTIONS */
 
 function updateLists() {
     selectedKanaList = []
@@ -153,15 +181,6 @@ function updateLists() {
     }
 }
 
-let stats = {
-    combo: 0, maxCombo: 0, avgCombo: 0,
-    seen: 0, correct: 0, accuracy: 0,
-    _comboBreaks: 1
-}
-
-let buffer = ''
-let correct, locked
-
 function getRandomKana() {
     const rand = Math.floor(Math.random() * selectedKanaList.length)
     return selectedKanaList[rand]
@@ -178,9 +197,7 @@ function lockInput(time = 500) {
     }
 }
 
-function unlockInput() {
-    locked = false
-}
+const unlockInput = () => { return locked = false }
 
 function expand() {
     curr.style.transition = 'border 0.01s'
@@ -192,7 +209,7 @@ function expand() {
 }
 
 function compare() {
-    correctAnswer = selectedAnswerList[selectedKanaList.indexOf(curr.innerText)]
+    let correctAnswer = selectedAnswerList[selectedKanaList.indexOf(curr.innerText)]
     if (correctAnswer === buffer || !correctAnswer.startsWith(buffer)) {
         if (correctAnswer === buffer) {
             correct = true
@@ -259,7 +276,6 @@ function updateStats() {
     statAvgCombo.innerText = stats.avgCombo
 }
 
-let ithSound = 0
 
 function hotKeys(e) {
     switch (e.key) {
@@ -275,6 +291,8 @@ function hotKeys(e) {
     }
 }
 
+let ithSound = 0
+
 function updateBuffer(e) {
     if (!menu.attributes.hidden || e.key.length !== 1 || !/[a-zA-Z]/.test(e.key)) {
         hotKeys(e)
@@ -282,10 +300,10 @@ function updateBuffer(e) {
     }
 
     if (!locked) {
-        clickSounds[ithSound].play()
-        ithSound = (ithSound + 1) % clickSounds.length
-        expand()
+        clickSounds[ithSound++].play()
+        ithSound %= clickSounds.length
         buffer += e.key.toLowerCase()
+        expand()
         compare()
     }
 }
@@ -323,23 +341,21 @@ function loadLocalStorage() {
     }
 }
 
-const kanas = ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'ga', 'za', 'da', 'ba', 'pa']
-
 function updateMenu() {
     if (mode.hiragana) {
         document.getElementById('sep-h').style.display = 'flex'
         document.getElementById('sep-k').style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="katakana-${kanas[i]}"]`).style.display = 'none'
+            document.querySelector(`label[for="katakana-${KANAS[i]}"]`).style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="hiragana-${kanas[i]}"]`).style.display = 'flex'
+            document.querySelector(`label[for="hiragana-${KANAS[i]}"]`).style.display = 'flex'
     } else if (mode.katakana) {
         document.getElementById('sep-h').style.display = 'none'
         document.getElementById('sep-k').style.display = 'flex'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="hiragana-${kanas[i]}"]`).style.display = 'none'
+            document.querySelector(`label[for="hiragana-${KANAS[i]}"]`).style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="katakana-${kanas[i]}"]`).style.display = 'flex'
+            document.querySelector(`label[for="katakana-${KANAS[i]}"]`).style.display = 'flex'
     }
 }
 
@@ -398,17 +414,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 15; i++) {
         if (selectedHiragana[i]) {
-            document.getElementById(`hiragana-${kanas[i]}`).checked = true
+            document.getElementById(`hiragana-${KANAS[i]}`).checked = true
         }
     }
 
     for (let i = 0; i < 15; i++) {
-        document.getElementById(`hiragana-${kanas[i]}`).addEventListener('click', () => {
+        document.getElementById(`hiragana-${KANAS[i]}`).addEventListener('click', () => {
             selectedHiragana[i] = !selectedHiragana[i]
             if (selectedHiragana[i]) {
-                document.getElementById(`hiragana-${kanas[i]}`).checked = true
+                document.getElementById(`hiragana-${KANAS[i]}`).checked = true
             } else {
-                document.getElementById(`hiragana-${kanas[i]}`).checked = false
+                document.getElementById(`hiragana-${KANAS[i]}`).checked = false
             }
             selectedKanaList = []
             selectedAnswerList = []
@@ -419,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     break
                 } else if (j === 25) {
                     selectedHiragana[i] = true
-                    document.getElementById(`hiragana-${kanas[i]}`).checked = true
+                    document.getElementById(`hiragana-${KANAS[i]}`).checked = true
                 }
             }
         })
@@ -427,17 +443,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 15; i++) {
         if (selectedKatakana[i]) {
-            document.getElementById(`katakana-${kanas[i]}`).checked = true
+            document.getElementById(`katakana-${KANAS[i]}`).checked = true
         }
     }
 
     for (let i = 0; i < 15; i++) {
-        document.getElementById(`katakana-${kanas[i]}`).addEventListener('click', () => {
+        document.getElementById(`katakana-${KANAS[i]}`).addEventListener('click', () => {
             selectedKatakana[i] = !selectedKatakana[i]
             if (selectedKatakana[i]) {
-                document.getElementById(`katakana-${kanas[i]}`).checked = true
+                document.getElementById(`katakana-${KANAS[i]}`).checked = true
             } else {
-                document.getElementById(`katakana-${kanas[i]}`).checked = false
+                document.getElementById(`katakana-${KANAS[i]}`).checked = false
             }
             selectedKanaList = []
             selectedAnswerList = []
@@ -448,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     break
                 } else if (j === 25) {
                     selectedKatakana[i] = true
-                    document.getElementById(`katakana-${kanas[i]}`).checked = true
+                    document.getElementById(`katakana-${KANAS[i]}`).checked = true
                 }
             }
         })
