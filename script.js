@@ -2,94 +2,36 @@
 
 /* CONSTANTS */
 
-const HIRAGANA = [
-    ['あ', 'い', 'う', 'え', 'お'],
-    ['か', 'き', 'く', 'け', 'こ'],
-    ['さ', 'し', 'す', 'せ', 'そ'],
-    ['た', 'ち', 'つ', 'て', 'と'],
-    ['な', 'に', 'ぬ', 'ね', 'の'],
-    ['は', 'ひ', 'ふ', 'へ', 'ほ'],
-    ['ま', 'み', 'む', 'め', 'も'],
-    ['や', 'ゆ', 'よ'],
-    ['ら', 'り', 'る', 'れ', 'ろ'],
-    ['わ', 'を', 'ん'],
-    ['が', 'ぎ', 'ぐ', 'げ', 'ご'],
-    ['ざ', 'じ', 'ず', 'ぜ', 'ぞ'],
-    ['だ', 'ぢ', 'づ', 'で', 'ど'],
-    ['ば', 'び', 'ぶ', 'べ', 'ぼ'],
-    ['ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'],
-    ['きゃ', 'きゅ', 'きょ'],
-    ['しゃ', 'しゅ', 'しょ'],
-    ['ちゃ', 'ちゅ', 'ちょ'],
-    ['にゃ', 'にゅ', 'にょ'],
-    ['ひゃ', 'ひゅ', 'ひょ'],
-    ['みゃ', 'みゅ', 'みょ'],
-    ['りゃ', 'りゅ', 'りょ'],
-    ['ぎゃ', 'ぎゅ', 'ぎょ'],
-    ['じゃ', 'じゅ', 'じょ'],
-    ['びゃ', 'びゅ', 'びょ'],
-    ['ぴゃ', 'ぴゅ', 'ぴょ']
+const KANAS = [
+    [['a', 'あ', 'ア'], ['i', 'い', 'イ'], ['u', 'う', 'ウ'], ['e', 'え', 'エ'], ['o', 'お', 'オ']],
+    [['ka', 'か', 'カ'], ['ki', 'き', 'キ'], ['ku', 'く', 'ク'], ['ke', 'け', 'ケ'], ['ko', 'こ', 'コ']],
+    [['sa', 'さ', 'サ'], ['shi', 'し', 'シ'], ['su', 'す', 'ス'], ['se', 'せ', 'セ'], ['so', 'そ', 'ソ']],
+    [['ta', 'た', 'タ'], ['chi', 'ち', 'チ'], ['tsu', 'つ', 'ツ'], ['te', 'て', 'テ'], ['to', 'と', 'ト']],
+    [['na', 'な', 'ナ'], ['ni', 'に', 'ニ'], ['nu', 'ぬ', 'ヌ'], ['ne', 'ね', 'ネ'], ['no', 'の', 'ノ']],
+    [['ha', 'は', 'ハ'], ['hi', 'ひ', 'ヒ'], ['fu', 'ふ', 'フ'], ['he', 'へ', 'ヘ'], ['ho', 'ほ', 'ホ']],
+    [['ma', 'ま', 'マ'], ['mi', 'み', 'ミ'], ['mu', 'む', 'ム'], ['me', 'め', 'メ'], ['mo', 'も', 'モ']],
+    [['ya', 'や', 'ヤ'], ['yu', 'ゆ', 'ユ'], ['yo', 'よ', 'ヨ']],
+    [['ra', 'ら', 'ラ'], ['ri', 'り', 'リ'], ['ru', 'る', 'ル'], ['re', 'れ', 'レ'], ['ro', 'ろ', 'ロ']],
+    [['wa', 'わ', 'ワ'], ['wo', 'を', 'ヲ'], ['n', 'ん', 'ン']],
+    [['ga', 'が', 'ガ'], ['gi', 'ぎ', 'ギ'], ['gu', 'ぐ', 'グ'], ['ge', 'げ', 'ゲ'], ['go', 'ご', 'ゴ']],
+    [['za', 'ざ', 'ザ'], ['ji', 'じ', 'ジ'], ['zu', 'ず', 'ズ'], ['ze', 'ぜ', 'ゼ'], ['zo', 'ぞ', 'ゾ']],
+    [['da', 'だ', 'ダ'], ['ji', 'ぢ', 'ヂ'], ['zu', 'づ', 'ヅ'], ['de', 'で', 'デ'], ['do', 'ど', 'ド']],
+    [['ba', 'ば', 'バ'], ['bi', 'び', 'ビ'], ['bu', 'ぶ', 'ブ'], ['be', 'べ', 'ベ'], ['bo', 'ぼ', 'ボ']],
+    [['pa', 'ぱ', 'パ'], ['pi', 'ぴ', 'ピ'], ['pu', 'ぷ', 'プ'], ['pe', 'ぺ', 'ペ'], ['po', 'ぽ', 'ポ']],
+    [['kya', 'きゃ', 'キャ'], ['kyu', 'きゅ', 'キュ'], ['kyo', 'きょ', 'キョ']],
+    [['sha', 'しゃ', 'シャ'], ['shu', 'しゅ', 'シュ'], ['sho', 'しょ', 'ショ']],
+    [['cha', 'ちゃ', 'チャ'], ['chu', 'ちゅ', 'チュ'], ['cho', 'ちょ', 'チョ']],
+    [['nya', 'にゃ', 'ニャ'], ['nyu', 'にゅ', 'ニュ'], ['nyo', 'にょ', 'ニョ']],
+    [['hya', 'ひゃ', 'ヒャ'], ['hyu', 'ひゅ', 'ヒュ'], ['hyo', 'ひょ', 'ヒョ']],
+    [['mya', 'みゃ', 'ミャ'], ['myu', 'みゅ', 'ミュ'], ['myo', 'みょ', 'ミョ']],
+    [['rya', 'りゃ', 'リャ'], ['ryu', 'りゅ', 'リュ'], ['ryo', 'りょ', 'リョ']],
+    [['gya', 'ぎゃ', 'ギャ'], ['gyu', 'ぎゅ', 'ギュ'], ['gyo', 'ぎょ', 'ギョ']],
+    [['ja', 'じゃ', 'ジャ'], ['ju', 'じゅ', 'ジュ'], ['jo', 'じょ', 'ジョ']],
+    [['bya', 'びゃ', 'ビャ'], ['byu', 'びゅ', 'ビュ'], ['byo', 'びょ', 'ビョ']],
+    [['pya', 'ぴゃ', 'ピャ'], ['pyu', 'ぴゅ', 'ピュ'], ['pyo', 'ぴょ', 'ピョ']]
 ]
 
-const KATAKANA = [
-    ['ア', 'イ', 'ウ', 'エ', 'オ'],
-    ['カ', 'キ', 'ク', 'ケ', 'コ'],
-    ['サ', 'シ', 'ス', 'セ', 'ソ'],
-    ['タ', 'チ', 'ツ', 'テ', 'ト'],
-    ['ナ', 'ニ', 'ヌ', 'ネ', 'ノ'],
-    ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'],
-    ['マ', 'ミ', 'ム', 'メ', 'モ'],
-    ['ヤ', 'ユ', 'ヨ'],
-    ['ラ', 'リ', 'ル', 'レ', 'ロ'],
-    ['ワ', 'ヲ', 'ン'],
-    ['ガ', 'ギ', 'グ', 'ゲ', 'ゴ'],
-    ['ザ', 'ジ', 'ズ', 'ゼ', 'ゾ'],
-    ['ダ', 'ヂ', 'ヅ', 'デ', 'ド'],
-    ['バ', 'ビ', 'ブ', 'ベ', 'ボ'],
-    ['パ', 'ピ', 'プ', 'ペ', 'ポ'],
-    ['キャ', 'キュ', 'キョ'],
-    ['シャ', 'シュ', 'ショ'],
-    ['チャ', 'チュ', 'チョ'],
-    ['ニャ', 'ニュ', 'ニョ'],
-    ['ヒャ', 'ヒュ', 'ヒョ'],
-    ['ミャ', 'ミュ', 'ミョ'],
-    ['リャ', 'リュ', 'リョ'],
-    ['ギャ', 'ギュ', 'ギョ'],
-    ['ジャ', 'ジュ', 'ジョ'],
-    ['ビャ', 'ビュ', 'ビョ'],
-    ['ピャ', 'ピュ', 'ピョ']
-]
-
-const ROMAJI = [
-    ['a', 'i', 'u', 'e', 'o'],
-    ['ka', 'ki', 'ku', 'ke', 'ko'],
-    ['sa', 'shi', 'su', 'se', 'so'],
-    ['ta', 'chi', 'tsu', 'te', 'to'],
-    ['na', 'ni', 'nu', 'ne', 'no'],
-    ['ha', 'hi', 'fu', 'he', 'ho'],
-    ['ma', 'mi', 'mu', 'me', 'mo'],
-    ['ya', 'yu', 'yo'],
-    ['ra', 'ri', 'ru', 're', 'ro'],
-    ['wa', 'wo', 'n'],
-    ['ga', 'gi', 'gu', 'ge', 'go'],
-    ['za', 'ji', 'zu', 'ze', 'zo'],
-    ['da', 'ji', 'zu', 'de', 'do'],
-    ['ba', 'bi', 'bu', 'be', 'bo'],
-    ['pa', 'pi', 'pu', 'pe', 'po'],
-    ['kya', 'kyu', 'kyo'],
-    ['sha', 'shu', 'sho'],
-    ['cha', 'chu', 'cho'],
-    ['nya', 'nyu', 'nyo'],
-    ['hya', 'hyu', 'hyo'],
-    ['mya', 'myu', 'myo'],
-    ['rya', 'ryu', 'ryo'],
-    ['gya', 'gyu', 'gyo'],
-    ['ja', 'ju', 'jo'],
-    ['bya', 'byu', 'byo'],
-    ['pya', 'pyu', 'pyo']
-]
-
-const KANAS = ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'ga', 'za', 'da', 'ba', 'pa']
+const _KANAS = ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'ga', 'za', 'da', 'ba', 'pa']
 
 const clickSounds = Array.from({ length: 12 }, (_, i) => new Audio(`sounds/click${i + 1}.wav`))
 
@@ -143,47 +85,44 @@ let stats = {
     _comboBreaks: 1
 }
 
-let selectedKanaList = []
-let selectedAnswerList = []
 let buffer = ''
 let correct, locked
+let selectedList   = []
+let kanasQueue     = []
+let kanasInDisplay = []
 
 /* STOLEN FUNCTIONS */
 
 function shuffle(array) {
-    let currentIndex = array.length, randomIndex
+    let newArray = array.slice()
+    let currentIndex = newArray.length, randomIndex
     while (currentIndex > 0) {
         randomIndex = Math.floor(Math.random() * currentIndex)
         currentIndex--
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
-    } return array
+        [newArray[currentIndex], newArray[randomIndex]] = [newArray[randomIndex], newArray[currentIndex]]
+    } return newArray
 }
 
 /* FUNCTIONS */
 
-function updateLists() {
-    selectedKanaList = []
-    selectedAnswerList = []
+function updateList() {
+    selectedList = []
     if (mode.hiragana) {
         for (let i = 0; i < 26; i++) {
-            if (selectedHiragana[i]) {
-                selectedKanaList = selectedKanaList.concat(HIRAGANA[i])
-                selectedAnswerList = selectedAnswerList.concat(ROMAJI[i])
-            }
+            if (selectedHiragana[i]) selectedList = selectedList.concat(KANAS[i])
         }
     } else if (mode.katakana) {
         for (let i = 0; i < 26; i++) {
-            if (selectedKatakana[i]) {
-                selectedKanaList = selectedKanaList.concat(KATAKANA[i])
-                selectedAnswerList = selectedAnswerList.concat(ROMAJI[i])
-            }
+            if (selectedKatakana[i]) selectedList = selectedList.concat(KANAS[i])
         }
     }
+    kanasQueue = []
+    kanasInDisplay = [getKana(), getKana(), getKana()]
 }
 
-function getRandomKana() {
-    const rand = Math.floor(Math.random() * selectedKanaList.length)
-    return selectedKanaList[rand]
+function getKana() {
+    if (kanasQueue.length === 0) kanasQueue = shuffle(selectedList)
+    return kanasQueue.pop()
 }
 
 function lockInput(time = 500) {
@@ -209,7 +148,7 @@ function expand() {
 }
 
 function compare() {
-    let correctAnswer = selectedAnswerList[selectedKanaList.indexOf(curr.innerText)]
+    let correctAnswer = kanasInDisplay[0][0]
     if (correctAnswer === buffer || !correctAnswer.startsWith(buffer)) {
         if (correctAnswer === buffer) {
             correct = true
@@ -219,16 +158,30 @@ function compare() {
         }
         buffer = ''
         updateStats()
-        updateDisplay()
+        updateDisplay(true)
     }
 }
 
-function updateDisplay() {
-    prev2.innerText = prev1.innerText
-    prev1.innerText = curr.innerText
-    curr.innerText = next1.innerText
-    next1.innerText = next2.innerText
-    next2.innerText = getRandomKana()
+function updateDisplay(updatePrevious) {
+    let lastKana = kanasInDisplay[0]
+
+    if (updatePrevious) {
+        kanasInDisplay = [kanasInDisplay[1], kanasInDisplay[2], getKana()]
+        prev2.innerText = prev1.innerText
+        prev1.innerText = curr.innerText
+    }
+
+    if (mode.hiragana) {
+        curr.innerText = kanasInDisplay[0][1]
+        next1.innerText = kanasInDisplay[1][1]
+        next2.innerText = kanasInDisplay[2][1]
+    } else if (mode.katakana) {
+        curr.innerText = kanasInDisplay[0][2]
+        next1.innerText = kanasInDisplay[1][2]
+        next2.innerText = kanasInDisplay[2][2]
+    }
+
+    if (!updatePrevious) return
 
     prev2.parentElement.children[0].innerText = prev1.parentElement.children[0].innerText
     prev2.style.color = prev1.style.color
@@ -242,7 +195,7 @@ function updateDisplay() {
         prev1.parentElement.children[0].innerHTML = ''
     } else {
         let newP = document.createElement("p")
-        newP.innerText = selectedAnswerList[selectedKanaList.indexOf(prev1.innerText)]
+        newP.innerText = lastKana[0]
         prev1.style.color = '#f44'
         prev1.style.backgroundColor = '#933'
         prev1.style.border = '#f44 solid 4px'
@@ -308,11 +261,6 @@ function updateBuffer(e) {
     }
 }
 
-function reroll() {
-    for (let i = 2; i < 5; i++)
-        display.children[i].children[1].innerText = getRandomKana()
-}
-
 function saveLocalStorage() {
     localStorage.setItem("stats", JSON.stringify(stats))
     localStorage.setItem("selectedHiragana", JSON.stringify(selectedHiragana))
@@ -346,16 +294,16 @@ function updateMenu() {
         document.getElementById('sep-h').style.display = 'flex'
         document.getElementById('sep-k').style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="katakana-${KANAS[i]}"]`).style.display = 'none'
+            document.querySelector(`label[for="katakana-${_KANAS[i]}"]`).style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="hiragana-${KANAS[i]}"]`).style.display = 'flex'
+            document.querySelector(`label[for="hiragana-${_KANAS[i]}"]`).style.display = 'flex'
     } else if (mode.katakana) {
         document.getElementById('sep-h').style.display = 'none'
         document.getElementById('sep-k').style.display = 'flex'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="hiragana-${KANAS[i]}"]`).style.display = 'none'
+            document.querySelector(`label[for="hiragana-${_KANAS[i]}"]`).style.display = 'none'
         for (let i = 0; i < 15; i++)
-            document.querySelector(`label[for="katakana-${KANAS[i]}"]`).style.display = 'flex'
+            document.querySelector(`label[for="katakana-${_KANAS[i]}"]`).style.display = 'flex'
     }
 }
 
@@ -379,8 +327,17 @@ function menuActions(action) {
 document.addEventListener('DOMContentLoaded', () => {
     // localStorage.clear()
     loadLocalStorage()
-    updateLists()
-    reroll()
+    updateList()
+
+    if (mode.hiragana) {
+        curr.innerText = kanasInDisplay[0][1]
+        next1.innerText = kanasInDisplay[1][1]
+        next2.innerText = kanasInDisplay[2][1]
+    } else if (mode.katakana) {
+        curr.innerText = kanasInDisplay[0][2]
+        next1.innerText = kanasInDisplay[1][2]
+        next2.innerText = kanasInDisplay[2][2]
+    }
 
     if (mode.hiragana) {
         document.getElementById('type-hiragana').checked = true
@@ -395,8 +352,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mode.hiragana = true
         mode.katakana = false
         updateMenu()
-        updateLists()
-        reroll()
+        updateList()
+        updateDisplay(false)
     })
 
     typeKatakana.addEventListener('click', () => {
@@ -404,8 +361,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mode.hiragana = false
         mode.katakana = true
         updateMenu()
-        updateLists()
-        reroll()
+        updateList()
+        updateDisplay(false)
     })
 
     updateMenu()
@@ -414,28 +371,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 15; i++) {
         if (selectedHiragana[i]) {
-            document.getElementById(`hiragana-${KANAS[i]}`).checked = true
+            document.getElementById(`hiragana-${_KANAS[i]}`).checked = true
         }
     }
 
     for (let i = 0; i < 15; i++) {
-        document.getElementById(`hiragana-${KANAS[i]}`).addEventListener('click', () => {
+        document.getElementById(`hiragana-${_KANAS[i]}`).addEventListener('click', () => {
             selectedHiragana[i] = !selectedHiragana[i]
             if (selectedHiragana[i]) {
-                document.getElementById(`hiragana-${KANAS[i]}`).checked = true
+                document.getElementById(`hiragana-${_KANAS[i]}`).checked = true
             } else {
-                document.getElementById(`hiragana-${KANAS[i]}`).checked = false
+                document.getElementById(`hiragana-${_KANAS[i]}`).checked = false
             }
-            selectedKanaList = []
-            selectedAnswerList = []
             for (let j = 0; j < 26; j++) {
                 if (selectedHiragana[j]) {
-                    updateLists()
-                    reroll()
+                    updateList()
+                    updateDisplay(false)
                     break
                 } else if (j === 25) {
                     selectedHiragana[i] = true
-                    document.getElementById(`hiragana-${KANAS[i]}`).checked = true
+                    document.getElementById(`hiragana-${_KANAS[i]}`).checked = true
                 }
             }
         })
@@ -443,28 +398,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < 15; i++) {
         if (selectedKatakana[i]) {
-            document.getElementById(`katakana-${KANAS[i]}`).checked = true
+            document.getElementById(`katakana-${_KANAS[i]}`).checked = true
         }
     }
 
     for (let i = 0; i < 15; i++) {
-        document.getElementById(`katakana-${KANAS[i]}`).addEventListener('click', () => {
+        document.getElementById(`katakana-${_KANAS[i]}`).addEventListener('click', () => {
             selectedKatakana[i] = !selectedKatakana[i]
             if (selectedKatakana[i]) {
-                document.getElementById(`katakana-${KANAS[i]}`).checked = true
+                document.getElementById(`katakana-${_KANAS[i]}`).checked = true
             } else {
-                document.getElementById(`katakana-${KANAS[i]}`).checked = false
+                document.getElementById(`katakana-${_KANAS[i]}`).checked = false
             }
-            selectedKanaList = []
-            selectedAnswerList = []
             for (let j = 0; j < 26; j++) {
                 if (selectedKatakana[j]) {
-                    updateLists()
-                    reroll()
+                    updateList()
+                    updateDisplay(false)
                     break
                 } else if (j === 25) {
                     selectedKatakana[i] = true
-                    document.getElementById(`katakana-${KANAS[i]}`).checked = true
+                    document.getElementById(`katakana-${_KANAS[i]}`).checked = true
                 }
             }
         })
@@ -474,7 +427,5 @@ document.addEventListener('DOMContentLoaded', () => {
     screenCover.addEventListener('click', () => { menuActions('close') })
     closeMenuButton.addEventListener('click', () => { menuActions('close') })
 
-    window.addEventListener('beforeunload', () => {
-        saveLocalStorage()
-    })
+    window.addEventListener('beforeunload', () => { saveLocalStorage() })
 })
