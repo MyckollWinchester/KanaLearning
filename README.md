@@ -10,8 +10,6 @@
   
   ![KanaLearning GIF Demo](/demo.webp)
   
-  Made with vanilla `JavaScript`, `CSS`, and `HTML` for learning purposes.
-  
-  Highly inspired by HooLogic's [RealKana](https://www.realkana.com/).
+  Made using vanilla `HTML`, `CSS`, and `JavaScript`.
 
 </section>
